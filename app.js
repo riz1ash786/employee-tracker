@@ -89,7 +89,7 @@ const optionsList = () => {
 // view all departments in the database
 viewDepartments = () => {
   var query = "SELECT * FROM department";
-  connection.query(query, function (err, res) {
+  connection.query(query, (err, res) => {
     if (err) throw err;
     console.table("All Departments:", res);
     options();
@@ -99,7 +99,7 @@ viewDepartments = () => {
 // view all employees in the database
 viewEmployees = () => {
   var query = "SELECT * FROM employee";
-  connection.query(query, function (err, res) {
+  connection.query(query, (err, res) => {
     if (err) throw err;
     console.log(res.length + " employees found!");
     console.table("All Employees:", res);
@@ -110,7 +110,7 @@ viewEmployees = () => {
 // view all roles in the database
 viewRoles = () => {
   var query = "SELECT * FROM role";
-  connection.query(query, function (err, res) {
+  connection.query(query, (err, res) => {
     if (err) throw err;
     console.table("All Roles:", res);
     options();
@@ -118,7 +118,7 @@ viewRoles = () => {
 };
 // add an employee to the database
 addEmployee = () => {
-  connection.query("SELECT * FROM role", function (err, res) {
+  connection.query("SELECT * FROM role", (err, res) => {
     if (err) throw err;
     inquirer
       .prompt([
@@ -140,14 +140,14 @@ addEmployee = () => {
         {
           name: "role",
           type: "list",
-          choices: function () {
+          choices: () => {
             var roleArray = [];
             for (let i = 0; i < res.length; i++) {
               roleArray.push(res[i].title);
             }
             return roleArray;
           },
-          message: "What is this employee's role? ",
+          message: "What is the employee's role? ",
         },
       ])
       .then((answer) => {
@@ -174,3 +174,42 @@ addEmployee = () => {
       });
   });
 };
+
+// add a department to the database
+addDepartment = () => {
+    inquirer
+        .prompt([
+            {
+                name: 'newDepartment', 
+                type: 'input', 
+                message: 'Which department would you like to add?'
+            }
+            ]).then((answer) => {
+                connection.query(
+                    'INSERT INTO department SET ?',
+                    {
+                        name: answer.newDepartment
+                    });
+                var query = 'SELECT * FROM department';
+                connection.query(query, (err, res) => {
+                if(err)throw err;
+                console.log('Department successfully added!');
+                console.table('All Departments:', res);
+                options();
+                })
+            })
+};
+
+// add a role to the database
+addRole = () => {
+    connection.query('SELECT * FROM department', ((err, res) => {
+        if (err) throw err;
+    
+        inquirer 
+        .prompt([
+            {
+                name: 'new_role',
+                type: 'input', 
+                message: "What new role would you like to add?"
+            },
+
