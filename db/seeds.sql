@@ -22,7 +22,7 @@ VALUES
 INSERT INTO employee (first_name, last_name, role_id, employee_id)
 VALUES 
 ('Rizwan', 'Ashraf', 1, 86),
-('Lewis', 'Hmailton', 2, 44),
+('Lewis', 'Hamilton', 2, 44),
 ('Cristiano', 'Ronaldo', 3, 07),
 ('Imran', 'Khan', 4, 17),
 ('Mike', 'Tyson', 5, 50),

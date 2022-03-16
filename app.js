@@ -24,11 +24,11 @@ postConnection = () => {
   console.log("********| EMPLOYEE TRACKER |*******");
   console.log("********|~~~~~~~~~~~~~~~~~~|*******");
   console.log("***********************************");
-  optionsList();
+  options();
 };
 
 // prompts user with list of options to choose from
-const optionsList = () => {
+const options = () => {
   inquirer
     .prompt([
       {
