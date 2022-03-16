@@ -11,61 +11,77 @@ const connection = mysql.createConnection({
 });
 
 // connects to sql server and sql database
-connection.connect(function (err) {
+connection.connect((err) => {
   if (err) throw err;
-  options();
+  postConnection();
 });
 
+postConnection = () => {
+  console.log("***********************************");
+  console.log("*       |                         *");
+  console.log("*       | EMPLOYEE TRACKER |         *");
+  console.log("*       |__________________|                         *");
+  console.log("***********************************");
+  optionsList();
+};
+
 // prompts user with list of options to choose from
-function options() {
+const optionsList = () => {
   inquirer
-    .prompt({
-      name: "action",
-      type: "list",
-      message: "Welcome to our employee database! What would you like to do?",
-      choices: [
-        "View all departments",
-        "View all employees",
-        "View all roles",
-        "Add a department",
-        "Add an employee role",
-        "Add a role",
-        "Update employee role",
-        "Delete an employee",
-        "EXIT",
-      ],
-    })
-    .then(function (answer) {
-      switch (answer.action) {
-        case "View all departments":
-          viewDepartments();
-          break;
-        case "View all employees":
-          viewEmployees();
-          break;
-        case "View all roles":
-          viewRoles();
-          break;
-        case "Add a department":
-          addDepartment();
-          break;
-        case "Add an employee":
-          addEmployee();
-          break;
-        case "Add a role":
-          addRole();
-          break;
-        case "Update employee role":
-          updateRole();
-          break;
-        case "Delete an employee":
-          deleteEmployee();
-          break;
-        case "EXIT":
-          exitApp();
-          break;
-        default:
-          break;
+    .prompt([
+      {
+        name: "action",
+        type: "list",
+        message: "Welcome to our employee database! What would you like to do?",
+        options: [
+          "View all departments",
+          "View all employees",
+          "View all roles",
+          "Add a department",
+          "Add an employee",
+          "Add a role",
+          "Update an employee",
+          "Delete an employee",
+          "EXIT",
+        ],
+      },
+    ])
+    .then((answers) => {
+      const { options } = answers;
+      if (options === "View all departments") {
+        viewDepartments();
+      }
+
+      if (options === "View all employees") {
+        viewEmployees();
+      }
+
+      if (options === "View all roles") {
+        viewRoles();
+      }
+
+      if (options === "Add a department") {
+        addDepartment();
+      }
+
+      if (options === "Add an employee") {
+        addEmployee();
+      }
+
+      if (options === "Add a role") {
+        addRole();
+      }
+
+      if (options === "Update an employee") {
+        updateEmployee();
+      }
+
+      if (options === "Delete an employee") {
+        deleteEmployee();
+      }
+
+      if (options === "Exit") {
+        connection.exitApp();
       }
     });
-}
+};
