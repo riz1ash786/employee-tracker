@@ -116,3 +116,61 @@ viewRoles = () => {
     options();
   });
 };
+// add an employee to the database
+addEmployee = () => {
+  connection.query("SELECT * FROM role", function (err, res) {
+    if (err) throw err;
+    inquirer
+      .prompt([
+        {
+          name: "first_name",
+          type: "input",
+          message: "Please enter the employee's fist name? ",
+        },
+        {
+          name: "last_name",
+          type: "input",
+          message: "Please enter the employee's last name? ",
+        },
+        {
+          name: "employee_id",
+          type: "input",
+          message: "Please enter the employee's ID? ",
+        },
+        {
+          name: "role",
+          type: "list",
+          choices: function () {
+            var roleArray = [];
+            for (let i = 0; i < res.length; i++) {
+              roleArray.push(res[i].title);
+            }
+            return roleArray;
+          },
+          message: "What is this employee's role? ",
+        },
+      ])
+      .then((answer) => {
+        let role_id;
+        for (let i = 0; i < res.length; i++) {
+          if (res[a].title == answer.role) {
+            role_id = res[i].id;
+            console.log(role_id);
+          }
+        }
+        connection.query(
+          "INSERT INTO employee SET ?",
+          {
+            first_name: answer.first_name,
+            last_name: answer.last_name,
+            employee_id: answer.employee_id,
+            role_id: role_id,
+          }.then((err) => {
+            if (err) throw err;
+            console.log("Employee successfully added!");
+            options();
+          })
+        );
+      });
+  });
+};
