@@ -26,4 +26,6 @@ VALUES
 ('Cristiano', 'Ronaldo', 3, 07),
 ('Imran', 'Khan', 4, 17),
 ('Mike', 'Tyson', 5, 50),
-('Michael', 'Jordan', 6, 23);
+('Michael', 'Jordan', 6, 23),
+('Khabib', 'Nurmagomedov', 7, 29),
+('Tiger', 'Woods', 8, 82);
