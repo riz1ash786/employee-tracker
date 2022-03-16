@@ -29,8 +29,7 @@ Open terminal and install node modules using the following command `npm i`
 
 ## Usage
 
-Step 3 -
-Enter `node app.js` in terminal to start the application.
+Enter `npm start` in terminal to start the application.
 
 ## Contributing
 
