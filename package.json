@@ -1,27 +1,28 @@
 {
-  "name": "note-taker",
+  "name": "employee-tracker",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "app.js",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1",
-    "uuid": "^8.3.2"
+    "console.table": "^0.10.0",
+    "inquirer": "^8.2.1",
+    "mysql2": "^2.3.3"
   },
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js"
   },
-  "description": "Create an application called Note Taker that can be used to write and save notes. This application will use an Express.js back end and will save and retrieve note data from a JSON file.",
+  "description": "Build a command-line application from scratch to manage a company's employee database, using Node.js, Inquirer, and MySQL.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/riz1ash786/note-taker.git"
+    "url": "git+https://github.com/riz1ash786/employee-tracker.git"
   },
   "author": "Rizwan Ashraf",
   "bugs": {
-    "url": "https://github.com/riz1ash786/note-taker/issues"
+    "url": "https://github.com/riz1ash786/employee-tracker/issues"
   },
-  "homepage": "https://github.com/riz1ash786/note-taker#readme",
+  "homepage": "https://github.com/riz1ash786/employee-tracker#readme",
   "devDependencies": {
     "nodemon": "^2.0.15"
   }
