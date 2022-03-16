@@ -212,4 +212,35 @@ addRole = () => {
                 type: 'input', 
                 message: "What new role would you like to add?"
             },
+            {
+                name: 'salary',
+                type: 'input',
+                message: 'What is the salary of this role? (Enter a number)'
+            },
+            {
+                name: 'Department',
+                type: 'list',
+                choices: () => {
+                    var deptArray = [];
+                    for (let i = 0; i < res.length; i++) {
+                    deptArray.push(res[i].name);
+                    }
+                    return deptArray;
+                },
+            }
+        ]).then((answer) => {
+            let department_id;
+            for (let i = 0; i < res.length; i++) {
+                if (res[a].name == answer.Department) {
+                    department_id = res[i].id;
+                }
+            }
+    
+
+                })
+        })
+    })
+};
+
+
 
