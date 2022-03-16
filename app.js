@@ -18,9 +18,9 @@ connection.connect((err) => {
 
 postConnection = () => {
   console.log("***********************************");
-  console.log("*       |                         *");
-  console.log("*       | EMPLOYEE TRACKER |         *");
-  console.log("*       |__________________|                         *");
+  console.log("********|~~~~~~~~~~~~~~~~~~|*******");
+  console.log("********| EMPLOYEE TRACKER |*******");
+  console.log("********|~~~~~~~~~~~~~~~~~~|*******");
   console.log("***********************************");
   optionsList();
 };
@@ -81,7 +81,7 @@ const optionsList = () => {
       }
 
       if (options === "Exit") {
-        connection.exitApp();
+        exitApp();
       }
     });
 };
@@ -177,70 +177,89 @@ addEmployee = () => {
 
 // add a department to the database
 addDepartment = () => {
-    inquirer
-        .prompt([
-            {
-                name: 'newDepartment', 
-                type: 'input', 
-                message: 'Which department would you like to add?'
-            }
-            ]).then((answer) => {
-                connection.query(
-                    'INSERT INTO department SET ?',
-                    {
-                        name: answer.newDepartment
-                    });
-                var query = 'SELECT * FROM department';
-                connection.query(query, (err, res) => {
-                if(err)throw err;
-                console.log('Department successfully added!');
-                console.table('All Departments:', res);
-                options();
-                })
-            })
+  inquirer
+    .prompt([
+      {
+        name: "newDepartment",
+        type: "input",
+        message: "Which department would you like to add?",
+      },
+    ])
+    .then((answer) => {
+      connection.query("INSERT INTO department SET ?", {
+        name: answer.newDepartment,
+      });
+      var query = "SELECT * FROM department";
+      connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.log("Department successfully added!");
+        console.table("All Departments:", res);
+        options();
+      });
+    });
 };
 
 // add a role to the database
-addRole = () => {
-    connection.query('SELECT * FROM department', ((err, res) => {
-        if (err) throw err;
-    
-        inquirer 
-        .prompt([
-            {
-                name: 'new_role',
-                type: 'input', 
-                message: "What new role would you like to add?"
-            },
-            {
-                name: 'salary',
-                type: 'input',
-                message: 'What is the salary of this role? (Enter a number)'
-            },
-            {
-                name: 'Department',
-                type: 'list',
-                choices: () => {
-                    var deptArray = [];
-                    for (let i = 0; i < res.length; i++) {
-                    deptArray.push(res[i].name);
-                    }
-                    return deptArray;
-                },
-            }
-        ]).then((answer) => {
-            let department_id;
+(addRole = () => {
+  connection.query("SELECT * FROM department", (err, res) => {
+    if (err) throw err;
+
+    inquirer
+      .prompt([
+        {
+          name: "new_role",
+          type: "input",
+          message: "What new role would you like to add?",
+        },
+        {
+          name: "salary",
+          type: "input",
+          message: "What is the salary of this role? (Enter a number)",
+        },
+        {
+          name: "Department",
+          type: "list",
+          choices: () => {
+            var deptArray = [];
             for (let i = 0; i < res.length; i++) {
-                if (res[a].name == answer.Department) {
-                    department_id = res[i].id;
-                }
+              deptArray.push(res[i].name);
             }
-    
+            return deptArray;
+          },
+        },
+      ])
+      .then((answer) => {
+        let department_id;
+        for (let i = 0; i < res.length; i++) {
+          if (res[a].name == answer.Department) {
+            department_id = res[i].id;
+          }
+        }
 
-                })
-        })
-    })
-};
+        connection.query(
+          "INSERT INTO role SET ?",
+          {
+            title: answer.new_role,
+            salary: answer.salary,
+            department_id: department_id,
+          },
+          (err, res) => {
+            if (err) throw err;
+            console.log("Role successfully added!");
+            console.table("All Roles:", res);
+            options();
+          }
+        );
+      });
+  });
+}),
+  // update a role in the database
+  function updateRole() {};
 
+//  delete an employee
+function deleteEmployee() {}
 
-
+// exit the app
+function exitApp() {
+  connection.end();
+}
