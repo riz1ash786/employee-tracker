@@ -233,7 +233,7 @@ addDepartment = () => {
       .then((answer) => {
         let department_id;
         for (let i = 0; i < res.length; i++) {
-          if (res[a].name == answer.Department) {
+          if (res[i].name == answer.Department) {
             department_id = res[i].id;
           }
         }
