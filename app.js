@@ -32,10 +32,10 @@ const optionsList = () => {
   inquirer
     .prompt([
       {
-        name: "action",
+        name: "options",
         type: "list",
         message: "Welcome to our employee database! What would you like to do?",
-        options: [
+        choices: [
           "View all departments",
           "View all employees",
           "View all roles",
