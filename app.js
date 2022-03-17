@@ -111,7 +111,7 @@ viewEmployees = () => {
 
 // view all roles in the database
 viewRoles = () => {
-  var query = "SELECT * FROM role";
+  var query = "SELECT * FROM roles";
   connection.query(query, (err, res) => {
     if (err) throw err;
     console.table("All Roles:", res);
@@ -120,7 +120,7 @@ viewRoles = () => {
 };
 // add an employee to the database
 addEmployee = () => {
-  connection.query("SELECT * FROM role", (err, res) => {
+  connection.query("SELECT * FROM roles", (err, res) => {
     if (err) throw err;
     inquirer
       .prompt([
