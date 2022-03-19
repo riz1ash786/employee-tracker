@@ -25,11 +25,13 @@ Clone repository link into terminal
 https://github.com/riz1ash786/employee-tracker
 
 Step 2 -
-Open terminal and install node modules using the following command `npm i`
+Open terminal and install dependencies using the following command `npm i`
 
 ## Usage
 
-Enter `npm start` in terminal to start the application.
+- Enter `mysql -u root -p` to access the database via MySQL.
+
+- Enter `npm start` in terminal to start the application.
 
 ## Contributing
 
@@ -47,7 +49,7 @@ License Link: [MIT](https://opensource.org/licenses/MIT)
 
 ## Deployed Application
 
-<!-- https://powerful-atoll-97832.herokuapp.com/notes -->
+There is no deployed application for this assignment.
 
 ## GitHub Repository
 
@@ -62,15 +64,9 @@ If you have any additional questions then please get in touch via github or emai
 
 ## Screenshot
 
-Homepage
-![employee-tracker](./Assets/Images/homepage.png)
+Employee Tracker Command Line
+![employee-tracker-command-line](./assets/images/command-line.png)
 
 ## Demonstration Links
 
-- HD link via google drive
-
-<!-- https://drive.google.com/file/d/1RfD-i8WtvatQx1ppiIlFX4Y1xz5i83nX/view?usp=sharing -->
-
-- Video demo
-
-<!-- https://user-images.githubusercontent.com/93995881/158031642-e61dab39-1c70-45b9-86e1-5102ea6332f5.mov -->
+https://drive.google.com/file/d/13BNQX_uRQM_sw1YTHkKuoxSOsxmUO_pg/view?usp=sharing
