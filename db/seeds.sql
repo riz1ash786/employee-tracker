@@ -19,7 +19,7 @@ VALUES
 ('Finance Controller', 70000, 2),
 ('Compliance Manager', 100000, 3);
 
-INSERT INTO employee (first_name, last_name, role_id, employee_id)
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
 ('Rizwan', 'Ashraf', 1, 86),
 ('Lewis', 'Hamilton', 2, 44),

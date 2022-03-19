@@ -18,7 +18,7 @@ connection.connect((err) => {
   postConnection();
 });
 
-postConnection = () => {
+const postConnection = () => {
   console.log("***********************************");
   console.log("********|~~~~~~~~~~~~~~~~~~|*******");
   console.log("********| EMPLOYEE TRACKER |*******");
@@ -42,8 +42,8 @@ const options = () => {
           "Add a department",
           "Add an employee",
           "Add a role",
-          "Update an employee",
           "Delete an employee",
+          "Delete a role",
           "EXIT",
         ],
       },
@@ -74,12 +74,12 @@ const options = () => {
         addRole();
       }
 
-      if (options === "Update an employee") {
-        updateEmployee();
-      }
-
       if (options === "Delete an employee") {
         deleteEmployee();
+      }
+
+      if (options === "Delete a role") {
+        deleteRole();
       }
 
       if (options === "Exit") {
@@ -89,7 +89,7 @@ const options = () => {
 };
 
 // view all departments in the database
-viewDepartments = () => {
+const viewDepartments = () => {
   var query = "SELECT * FROM department";
   connection.query(query, (err, res) => {
     if (err) throw err;
@@ -99,7 +99,7 @@ viewDepartments = () => {
 };
 
 // view all employees in the database
-viewEmployees = () => {
+const viewEmployees = () => {
   var query = "SELECT * FROM employee";
   connection.query(query, (err, res) => {
     if (err) throw err;
@@ -110,7 +110,7 @@ viewEmployees = () => {
 };
 
 // view all roles in the database
-viewRoles = () => {
+const viewRoles = () => {
   var query = "SELECT * FROM roles";
   connection.query(query, (err, res) => {
     if (err) throw err;
@@ -119,7 +119,7 @@ viewRoles = () => {
   });
 };
 // add an employee to the database
-addEmployee = () => {
+const addEmployee = () => {
   connection.query("SELECT * FROM roles", (err, res) => {
     if (err) throw err;
     inquirer
@@ -135,7 +135,7 @@ addEmployee = () => {
           message: "Please enter the employee's last name? ",
         },
         {
-          name: "employee_id",
+          name: "manager_id",
           type: "input",
           message: "Please enter the employee's ID? ",
         },
@@ -155,7 +155,7 @@ addEmployee = () => {
       .then((answer) => {
         let role_id;
         for (let i = 0; i < res.length; i++) {
-          if (res[a].title == answer.role) {
+          if (res[i].title == answer.role) {
             role_id = res[i].id;
             console.log(role_id);
           }
@@ -165,20 +165,22 @@ addEmployee = () => {
           {
             first_name: answer.first_name,
             last_name: answer.last_name,
-            employee_id: answer.employee_id,
+            manager_id: answer.manager_id,
             role_id: role_id,
-          }.then((err) => {
+          },
+          (err, res) => {
             if (err) throw err;
             console.log("Employee successfully added!");
+            console.table("All Employees:", res);
             options();
-          })
+          }
         );
       });
   });
 };
 
 // add a department to the database
-addDepartment = () => {
+const addDepartment = () => {
   inquirer
     .prompt([
       {
@@ -202,7 +204,7 @@ addDepartment = () => {
 };
 
 // add a role to the database
-(addRole = () => {
+const addRole = () => {
   connection.query("SELECT * FROM department", (err, res) => {
     if (err) throw err;
 
@@ -222,7 +224,7 @@ addDepartment = () => {
           name: "Department",
           type: "list",
           choices: () => {
-            var deptArray = [];
+            let deptArray = [];
             for (let i = 0; i < res.length; i++) {
               deptArray.push(res[i].name);
             }
@@ -254,14 +256,64 @@ addDepartment = () => {
         );
       });
   });
-}),
-  // update a role in the database
-  function updateRole() {};
+};
+// delete an employee
 
-//  delete an employee
-function deleteEmployee() {}
+const deleteEmployee = () => {
+  query = `SELECT * FROM employee`;
+  connection.query(query, (err, results) => {
+    if (err) throw err;
+
+    inquirer
+      .prompt([
+        {
+          name: "deleteEmployee",
+          type: "list",
+          choices: function () {
+            let choiceArray = results.map((choice) => choice.title);
+            return choiceArray;
+          },
+          message: "Select an Employee to remove:",
+        },
+      ])
+      .then((answer) => {
+        connection.query(`DELETE FROM employee WHERE ? `, {
+          title: answer.deleteEmployee,
+        });
+        options();
+      });
+  });
+};
+
+//  delete a role
+const deleteRole = () => {
+  query = `SELECT * FROM roles`;
+  connection.query(query, (err, results) => {
+    if (err) throw err;
+
+    inquirer
+      .prompt([
+        {
+          name: "deleteRole",
+          type: "list",
+          choices: function () {
+            let choiceArray = results.map((choice) => choice.title);
+            return choiceArray;
+          },
+          message: "Select a Role to remove:",
+        },
+      ])
+      .then((answer) => {
+        connection.query(`DELETE FROM roles WHERE ? `, {
+          title: answer.deleteRole,
+        });
+        options();
+      });
+  });
+};
 
 // exit the app
-function exitApp() {
+const exitApp = () => {
   connection.end();
-}
+  console.log("Connection to employee db closed");
+};
