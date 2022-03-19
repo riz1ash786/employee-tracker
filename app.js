@@ -42,7 +42,6 @@ const options = () => {
           "Add a department",
           "Add an employee",
           "Add a role",
-          "Delete an employee",
           "Delete a role",
           "EXIT",
         ],
@@ -72,10 +71,6 @@ const options = () => {
 
       if (options === "Add a role") {
         addRole();
-      }
-
-      if (options === "Delete an employee") {
-        deleteEmployee();
       }
 
       if (options === "Delete a role") {
@@ -254,33 +249,6 @@ const addRole = () => {
             options();
           }
         );
-      });
-  });
-};
-// delete an employee
-
-const deleteEmployee = () => {
-  query = `SELECT * FROM employee`;
-  connection.query(query, (err, results) => {
-    if (err) throw err;
-
-    inquirer
-      .prompt([
-        {
-          name: "deleteEmployee",
-          type: "list",
-          choices: function () {
-            let choiceArray = results.map((choice) => choice.title);
-            return choiceArray;
-          },
-          message: "Select an Employee to remove:",
-        },
-      ])
-      .then((answer) => {
-        connection.query(`DELETE FROM employee WHERE ? `, {
-          title: answer.deleteEmployee,
-        });
-        options();
       });
   });
 };
